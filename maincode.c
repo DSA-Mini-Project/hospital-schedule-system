@@ -48,6 +48,7 @@ node * createLinkedList(int n)
     return head;
 }
 
+
 void display(node * head)
 {
     node * cur = head;
@@ -75,6 +76,61 @@ void insert_new_appointment(node * head, int timeslot, char name[], char contact
         cur = cur->next;
     }
 }
+
+void cancel(node * head, char contactn[])
+{
+   node * cur = head;
+   while(cur->next!=NULL) 
+   {
+      if(cur->contact_number == contactn) 
+      {
+         strcpy(cur->name, "TBE");
+         strcpy(cur->contact_number, "TBE");
+         strcpy(cur->type, "TBE");
+         strcpy(cur->reschedule_preference, "TBE");
+      }
+      cur = cur->next;
+   }
+    printf("Your appointment has been successfully cancelled.");
+ }
+ 
+void cancelinput(node * physician_schedule, node * gensurgeon_schedule, node * radiologist_schedule)
+{
+    char contactn[10];
+    int apptype;
+    printf("\nPlease enter your contact number:\n");
+    scanf("%s", &contactn);
+    char type[30];
+    char typeinput[8][30] = {"General Consultancy", "Blood Test/Vaccinations", "ECG Test", "Routine Checkup", "Minor Surgery", "Major Surgery", "X-Ray", "Ultrasound"};
+    printf("\nAppointment type: (Enter serial number 1-8)\n");
+    for(int i=0; i<8; i++)
+    {
+        printf("%d : %s\n",i+1,typeinput[i]);
+    } 
+    scanf("%d", &apptype);
+    strcpy(type,typeinput[apptype-1]);
+    switch(apptype)
+    {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            cancel(physician_schedule, contactn);
+            break;
+        case 5:
+        case 6:
+            cancel(gensurgeon_schedule, contactn);
+            break;
+        case 7:
+        case 8:
+            cancel(radiologist_schedule, contactn);
+            break;
+        default:
+            printf("Please try again, your appointment was not found.");
+            break;
+    }
+}
+
 
 void input_details(node * physician_schedule, node * gensurgeon_schedule, node * radiologist_schedule)
 {
@@ -220,6 +276,4 @@ int main()
     radiologist_schedule = createLinkedList(n);
 
     input_details(physician_schedule, gensurgeon_schedule, radiologist_schedule);
-    
 }
-
