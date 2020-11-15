@@ -244,20 +244,14 @@ void enter(node * physician_schedule, node * gensurgeon_schedule, node * radiolo
     {
         case 1:
             display(physician_schedule);
-            for(int i=0; i<24; i++)
-                printf("\n%s", physician_timeslot_availability[i]);
             getchar();
             break;
         case 2:
             display(gensurgeon_schedule);
-            for(int i=0; i<24; i++)
-                printf("\n%s", gensurgeon_timeslot_availability[i]);
             getchar();
             break;
         case 3:
             display(radiologist_schedule);
-            for(int i=0; i<24; i++)
-                printf("\n%s", radiologist_timeslot_availability[i]);
             getchar();
             break;
         default:
