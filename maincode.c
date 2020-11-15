@@ -58,10 +58,15 @@ node * createLinkedList(int n)
 void display(node * head)
 {
     node * cur = head;
+    printf("\nTimeslot number\t\tName\t\tConatct number\t\tAppointment type\t\tReschedule?");
     while(cur->next != NULL)
     {
         printf("\n%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s",cur->timeslot,cur->name,cur->contact_number,cur->type,cur->reschedule_preference);
         cur=cur->next;
+    }
+    if(cur->next==NULL)
+    {
+        printf("\n%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s",cur->timeslot,cur->name,cur->contact_number,cur->type,cur->reschedule_preference);
     }
     printf("\n");
 }
@@ -100,7 +105,7 @@ void printconfirmation(node * head, int timeslot, char name[], char type[], char
 
 void reschedule(node * head, int atype, int startpos)
 {
-    char dicttime[24][8]={"900","930","1000","1030","1100","1130","1200","1230","1300","1330","1400","1430","1500","1530","1600","1630","1700","1730","1800","1830","1900","1930","2000","2030"};
+    char dicttime[24][8]={"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
     int elen, alen, oldstart;
     char oldtype[25], con[10];
     if(atype==1 || atype==2 || atype==7)
@@ -167,6 +172,50 @@ void reschedule(node * head, int atype, int startpos)
         else
             cur = cur->next;
 
+    }
+}
+
+void view(node * head)
+{
+    int i;
+    char contactnum[10];
+    char timings[24][8] = {"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
+    printf("Enter your contact number to view your appointment:\t");
+    scanf("%s",&contactnum);
+    node * cur = head;
+   while(cur->next!=NULL)
+   {
+      if(!strcmp(cur->contact_number, contactnum))
+      {
+        i=cur->timeslot;
+        printf("\nHi %s, your %s appointment is booked for %s.\n",cur->name,cur->type,timings[i-1]);
+        getchar();
+        return;
+      }
+      cur = cur->next;
+   }
+}
+
+void viewapp(node * physician_schedule, node * gensurgeon_schedule, node * radiologist_schedule)
+{
+    int choose;
+    printf("\nIf you would like to view your appointment timings and type, kindly enter the appropriate alphabet below for your category.\nPhysical check-up: 1\nSurgery: 2\nRadiology/scans: 3\n");
+    scanf(" %d",&choose);
+    switch(choose)
+    {
+    case 1:
+        view(physician_schedule);
+        break;
+    case 2:
+        view(gensurgeon_schedule);
+        break;
+    case 3:
+        view(radiologist_schedule);
+        break;
+    default:
+        printf("Invalid, please try again.");
+        viewapp(physician_schedule,gensurgeon_schedule,radiologist_schedule);
+        break;
     }
 }
 
@@ -468,7 +517,10 @@ int main()
                 getchar();
                 break;
 
-            //case 3:
+            case 3:
+                viewapp(physician_schedule, gensurgeon_schedule, radiologist_schedule);
+                getchar();
+                break;
 
             case 4:
                 cancelinput(physician_schedule, gensurgeon_schedule, radiologist_schedule);
