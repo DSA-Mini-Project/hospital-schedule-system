@@ -94,6 +94,7 @@ void printconfirmation(node * head, int timeslot, char name[], char type[], char
             break;
     }
     printf("\n\nHi %s. Your %s appointment for %s has been successfully booked!\n",name, type, time);
+    getchar();
 }
 
 
@@ -193,6 +194,7 @@ void cancel(node * head, int apptype, char contactn[])
    }
    reschedule(head, apptype, startpos);
     printf("Your appointment has been successfully cancelled.");
+    getchar();
  }
 
 void cancelinput(node * physician_schedule, node * gensurgeon_schedule, node * radiologist_schedule)
@@ -242,15 +244,19 @@ void enter(node * physician_schedule, node * gensurgeon_schedule, node * radiolo
     {
         case 1:
             display(physician_schedule);
+            getchar();
             break;
         case 2:
             display(gensurgeon_schedule);
+            getchar();
             break;
         case 3:
             display(radiologist_schedule);
+            getchar();
             break;
         default:
             printf("Cannot find this schedule, please try again.");
+            getchar();
             enter(physician_schedule,gensurgeon_schedule,radiologist_schedule);
             break;
     }
@@ -437,27 +443,41 @@ int main()
     gensurgeon_schedule = createLinkedList(n);
     radiologist_schedule = createLinkedList(n);
 
-    printf("WELCOME TO THE AUTOMATED HOSPITAL SCHEDULE MANAGEMENT SYSTEM\n\n");
-    
-/*
     mainmenu:
+        system("clear");
+        printf("WELCOME TO THE AUTOMATED HOSPITAL SCHEDULE MANAGEMENT SYSTEM\n\n");
         printf("\n|| Main Menu ||\n\n");
         printf("\n\t1. Admin login.\n\t2. Book an appointment.\n\t3. View your appointment.\n\t4. Cancel an appointment.\n\t5. Exit");
-        printf("\n(Enter index number to select operation)");
+        printf("\n(Enter index number to select operation): ");
         scanf("%d",&menuchoice);
         switch(menuchoice)
         {
-            //case 1:
+            case 1:
+                admin(physician_schedule, gensurgeon_schedule, radiologist_schedule);
+                getchar();
+                break;
 
             case 2:
                 input_details(physician_schedule, gensurgeon_schedule, radiologist_schedule);
-                //case 3:
+                getchar();
                 break;
 
-            //case 4:
+            //case 3:
 
+            case 4:
+                cancelinput(physician_schedule, gensurgeon_schedule, radiologist_schedule);
+                getchar();
+                break;
+
+            case 5:
+                break;
+
+            default:
+                printf("\nInvalid input!! Please try again");
+                getchar();
+                goto mainmenu;
         }
         if(menuchoice!=5)
             goto mainmenu;
-*/
+
 }
