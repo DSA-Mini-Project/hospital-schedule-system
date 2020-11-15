@@ -57,16 +57,19 @@ node * createLinkedList(int n)
 
 void display(node * head)
 {
+    int i;
     node * cur = head;
-    printf("\nTimeslot number\t\tName\t\tConatct number\t\tAppointment type\t\tReschedule?");
+    printf("\nTimeslot\t\tName\t\tConatct number\t\tAppointment type\t\tReschedule?");
+    char timings[24][8] = {"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
     while(cur->next != NULL)
     {
-        printf("\n%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s",cur->timeslot,cur->name,cur->contact_number,cur->type,cur->reschedule_preference);
+        i=cur->timeslot;
+        printf("\n%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s",timings[i-1],cur->name,cur->contact_number,cur->type,cur->reschedule_preference);
         cur=cur->next;
     }
     if(cur->next==NULL)
     {
-        printf("\n%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s",cur->timeslot,cur->name,cur->contact_number,cur->type,cur->reschedule_preference);
+        printf("\n%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s",timings[i],cur->name,cur->contact_number,cur->type,cur->reschedule_preference);
     }
     printf("\n");
 }
