@@ -6,10 +6,10 @@
 #include<string.h>
 
 
-//Arrays to represent the occupied or vacant status of the timeslots in staff members' schedules (0 represents occupied)
-char physician_timeslot_availability[24][8] = {"900","930","1000","1030","1100","1130","1200","1230","1300","1330","1400","1430","1500","1530","1600","1630","1700","1730","1800","1830","1900","1930","2000","2030"};
-char gensurgeon_timeslot_availability[24][8] = {"900","930","1000","1030","1100","1130","1200","1230","1300","1330","1400","1430","1500","1530","1600","1630","1700","1730","1800","1830","1900","1930","2000","2030"};
-char radiologist_timeslot_availability[24][8] = {"900","930","1000","1030","1100","1130","1200","1230","1300","1330","1400","1430","1500","1530","1600","1630","1700","1730","1800","1830","1900","1930","2000","2030"};
+//Arrays to represent the 0 or vacant status of the timeslots in staff members' schedules (0 represents 0)
+char physician_timeslot_availability[24][8] = {"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
+char gensurgeon_timeslot_availability[24][8] = {"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
+char radiologist_timeslot_availability[24][8] = {"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
 
 
 
@@ -244,14 +244,20 @@ void enter(node * physician_schedule, node * gensurgeon_schedule, node * radiolo
     {
         case 1:
             display(physician_schedule);
+            for(int i=0; i<24; i++)
+                printf("\n%s", physician_timeslot_availability[i]);
             getchar();
             break;
         case 2:
             display(gensurgeon_schedule);
+            for(int i=0; i<24; i++)
+                printf("\n%s", gensurgeon_timeslot_availability[i]);
             getchar();
             break;
         case 3:
             display(radiologist_schedule);
+            for(int i=0; i<24; i++)
+                printf("\n%s", radiologist_timeslot_availability[i]);
             getchar();
             break;
         default:
@@ -320,13 +326,14 @@ void input_details(node * physician_schedule, node * gensurgeon_schedule, node *
             printf("\nThe currently available timeslots are as follow: \n");
             for(int i=0; i<24; i++)
             {
-                if(strcmp(physician_timeslot_availability[i],"occupied")!=0)
-                    printf("%d: %s\n", i+1, physician_timeslot_availability[i]);
+                if(!strcmp(physician_timeslot_availability[i],"0"))
+                    continue;
+                printf("%d: %s\n", i+1, physician_timeslot_availability[i]);
             }
             printf("Please enter your preferred timeslot : ");
             scanf("%d", &timeslot);
             strcpy(time, physician_timeslot_availability[timeslot-1]);
-            strcpy(physician_timeslot_availability[timeslot-1],"occupied");
+            strcpy(physician_timeslot_availability[timeslot-1],"0");
             printf("\nOpt in for auto-rescheduling? (y/n)");
             scanf("%s", &reschedule_preference);
             insert_new_appointment(physician_schedule, timeslot, name, contact_number, type, reschedule_preference);
@@ -338,14 +345,15 @@ void input_details(node * physician_schedule, node * gensurgeon_schedule, node *
             printf("\nThe currently available timeslots are as follow: \n");
             for(int i=0; i<24; i++)
             {
-                if(strcmp(physician_timeslot_availability[i],"occupied")!=0 && strcmp(physician_timeslot_availability[i+1],"occupied")!=0 && i+1 <24)
-                    printf("%d: %s\n", i+1, physician_timeslot_availability[i]);
+                if(!strcmp(physician_timeslot_availability[i],"0") || !strcmp(physician_timeslot_availability[i+1],"0"))
+                    continue;
+                printf("%d: %s\n", i+1, physician_timeslot_availability[i]);
             }
             printf("Please enter your preferred timeslot : ");
             scanf("%d", &timeslot);
             strcpy(time, physician_timeslot_availability[timeslot-1]);
-            strcpy(physician_timeslot_availability[timeslot-1],"occupied");
-            strcpy(physician_timeslot_availability[timeslot],"occupied");
+            strcpy(physician_timeslot_availability[timeslot-1],"0");
+            strcpy(physician_timeslot_availability[timeslot],"0");
             printf("\nOpt in for auto-rescheduling? (y/n)");
             scanf("%s", &reschedule_preference);
             insert_new_appointment(physician_schedule, timeslot, name, contact_number, type, reschedule_preference);
@@ -357,14 +365,15 @@ void input_details(node * physician_schedule, node * gensurgeon_schedule, node *
             printf("\nThe currently available timeslots are as follow: \n");
             for(int i=0; i<24; i++)
             {
-                if(strcmp(gensurgeon_timeslot_availability[i], "occupied")!=0 && strcmp(gensurgeon_timeslot_availability[i+1], "occupied")!=0 && i+1 < 24)
-                    printf("%d: %s\n", i+1, gensurgeon_timeslot_availability[i]);
+                if(!strcmp(gensurgeon_timeslot_availability[i], "0") || !strcmp(gensurgeon_timeslot_availability[i+1], "0"))
+                    continue;
+                printf("%d: %s\n", i+1, gensurgeon_timeslot_availability[i]);
             }
             printf("Please enter your preferred timeslot : ");
             scanf("%d", &timeslot);
             strcpy(time, gensurgeon_timeslot_availability[timeslot-1]);
-            strcpy(gensurgeon_timeslot_availability[timeslot-1],"occupied");
-            strcpy(gensurgeon_timeslot_availability[timeslot],"occupied");
+            strcpy(gensurgeon_timeslot_availability[timeslot-1],"0");
+            strcpy(gensurgeon_timeslot_availability[timeslot],"0");
             printf("\nOpt in for auto-rescheduling? (y/n)");
             scanf("%s", &reschedule_preference);
             insert_new_appointment(gensurgeon_schedule, timeslot, name, contact_number, type, reschedule_preference);
@@ -376,14 +385,15 @@ void input_details(node * physician_schedule, node * gensurgeon_schedule, node *
             printf("\nThe currently available timeslots are as follow: \n");
             for(int i=0; i<24; i++)
             {
-                if(strcmp(gensurgeon_timeslot_availability[i], "occupied")!=0 && strcmp(gensurgeon_timeslot_availability[i+1], "occupied")!=0 && i+1 < 24 && strcmp(gensurgeon_timeslot_availability[i+2], "occupied")!=0 && i+2 < 24 && strcmp(gensurgeon_timeslot_availability[i+3], "occupied")!=0 && i+3 < 24 && strcmp(gensurgeon_timeslot_availability[i+4], "occupied")!=0 && i+4 < 24 && strcmp(gensurgeon_timeslot_availability[i+5], "occupied")!=0 && i+5 < 24)
-                    printf("%d: %s\n", i+1, gensurgeon_timeslot_availability[i]);
+                if(!strcmp(gensurgeon_timeslot_availability[i], "0") || !strcmp(gensurgeon_timeslot_availability[i+1], "0") || !strcmp(gensurgeon_timeslot_availability[i+2], "0") || !strcmp(gensurgeon_timeslot_availability[i+3], "0") || !strcmp(gensurgeon_timeslot_availability[i+4], "0") || !strcmp(gensurgeon_timeslot_availability[i+5], "0")!=0)
+                    continue;
+                printf("%d: %s\n", i+1, gensurgeon_timeslot_availability[i]);
             }
             printf("Please enter your preferred timeslot : ");
             scanf("%d", &timeslot);
             strcpy(time, gensurgeon_timeslot_availability[timeslot-1]);
             for(int i=0;i<6;i++)
-                strcpy(gensurgeon_timeslot_availability[timeslot-1+i],"occupied");
+                strcpy(gensurgeon_timeslot_availability[timeslot-1+i],"0");
             printf("\nOpt in for auto-rescheduling? (y/n)");
             scanf("%s", &reschedule_preference);
             for(int i=0;i<6;i++)
@@ -395,13 +405,14 @@ void input_details(node * physician_schedule, node * gensurgeon_schedule, node *
             printf("\nThe currently available timeslots are as follow: \n");
             for(int i=0; i<24; i++)
             {
-                if(strcmp(radiologist_timeslot_availability[i], "occupied")!=0)
-                    printf("%d: %s\n", i+1, radiologist_timeslot_availability[i]);
+                if(!strcmp(radiologist_timeslot_availability[i], "0"))
+                    continue;
+                printf("%d: %s\n", i+1, radiologist_timeslot_availability[i]);
             }
             printf("Please enter your preferred timeslot : ");
             scanf("%d", &timeslot);
             strcpy(time, gensurgeon_timeslot_availability[timeslot-1]);
-            strcpy(radiologist_timeslot_availability[timeslot-1],"occupied");
+            strcpy(radiologist_timeslot_availability[timeslot-1],"0");
             printf("\nOpt in for auto-rescheduling? (y/n)");
             scanf("%s", &reschedule_preference);
             insert_new_appointment(radiologist_schedule, timeslot, name, contact_number, type, reschedule_preference);
@@ -412,14 +423,15 @@ void input_details(node * physician_schedule, node * gensurgeon_schedule, node *
             printf("\nThe currently available timeslots are as follow: \n");
             for(int i=0; i<24; i++)
             {
-                if(strcmp(radiologist_timeslot_availability[i], "occupied")!=0 && strcmp(radiologist_timeslot_availability[i+1], "occupied")!=0 && i+1 < 24)
-                    printf("%d: %s\n", i+1, radiologist_timeslot_availability[i]);
+                if(!strcmp(radiologist_timeslot_availability[i], "0") || !strcmp(radiologist_timeslot_availability[i+1], "0"))
+                    continue;
+                printf("%d: %s\n", i+1, radiologist_timeslot_availability[i]);
             }
             printf("Please enter your preferred timeslot : ");
             scanf("%d", &timeslot);
             strcpy(time, gensurgeon_timeslot_availability[timeslot-1]);
-            strcpy(radiologist_timeslot_availability[timeslot-1],"occupied");
-            strcpy(radiologist_timeslot_availability[timeslot],"occupied");
+            strcpy(radiologist_timeslot_availability[timeslot-1],"0");
+            strcpy(radiologist_timeslot_availability[timeslot],"0");
             printf("\nOpt in for auto-rescheduling? (y/n)");
             scanf("%s", &reschedule_preference);
             insert_new_appointment(radiologist_schedule, timeslot, name, contact_number, type, reschedule_preference);
