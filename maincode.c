@@ -12,7 +12,7 @@ char gensurgeon_timeslot_availability[24][8] = {"9:00","9:30","10:00","10:30","1
 char radiologist_timeslot_availability[24][8] = {"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
 
 
-
+//Structure used to represent one in 24 half-hour timeslots, i.e. one node in the linked list.
 typedef struct node
 {
     int timeslot;
@@ -23,6 +23,7 @@ typedef struct node
     struct node * next;
 }node;
 
+//Function to create linked list with 'n' (24) timeslots, all initialised with "To Be Entered" values, representing a free time slot that an appointment may be booked into
 node * createLinkedList(int n)
 {
     node * head = NULL;
@@ -59,7 +60,7 @@ void display(node * head)
 {
     int i;
     node * cur = head;
-    printf("\nTimeslot\t\tName\t\tConatct number\t\tAppointment type\t\tReschedule?");
+    printf("\nTimeslot\t\tName\t\tContact number\t\tAppointment type\t\tReschedule?");
     char timings[24][8] = {"9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"};
     while(cur->next != NULL)
     {
@@ -202,7 +203,7 @@ void view(node * head)
 void viewapp(node * physician_schedule, node * gensurgeon_schedule, node * radiologist_schedule)
 {
     int choose;
-    printf("\nIf you would like to view your appointment timings and type, kindly enter the appropriate alphabet below for your category.\nPhysical check-up: 1\nSurgery: 2\nRadiology/scans: 3\n");
+    printf("\nIf you would like to view your appointment timings and type, kindly enter the appropriate alphabet below for your category.\n1. Physical check-up\n2. Surgery\n3. Radiology/scans\n");
     scanf(" %d",&choose);
     switch(choose)
     {
@@ -341,7 +342,7 @@ void admin(node * physician_schedule, node * gensurgeon_schedule, node * radiolo
    }
 }
 
-
+//Appointment booking function.
 void input_details(node * physician_schedule, node * gensurgeon_schedule, node * radiologist_schedule)
 {
 
@@ -542,3 +543,4 @@ int main()
             goto mainmenu;
 
 }
+
